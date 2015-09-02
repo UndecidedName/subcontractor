@@ -12,6 +12,8 @@
     <link href="/subcontractor/libs/css/simple-sidebar.css" rel="stylesheet">
     <!-- ui-grId css-->
     <link href="/subcontractor/libs/uigrid/css/ui-grid.css" rel="stylesheet" />
+    <!-- DatePicker -->
+    <link href="/subcontractor/libs/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="/subcontractor/libs/css/Site.css" rel="stylesheet">
 </html>
 <body>
@@ -50,6 +52,8 @@
 
 <script src="/subcontractor/libs/js/jquery.js"></script>
 <script src="/subcontractor/libs/js/bootstrap.min.js"></script>
+<script src="/subcontractor/libs/moment/moment.js"></script>
+<script src="/subcontractor/libs/js/bootstrap-datetimepicker.min.js"></script>
 <script src="/subcontractor/libs/js/spin.min.js"></script>
 <script src="/subcontractor/libs/angular/angular.min.js"></script>
 <script src="/subcontractor/libs/angular/angular-ui-router.min.js"></script>
