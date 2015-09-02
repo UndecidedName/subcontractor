@@ -105,7 +105,7 @@
                 columnProperties.name = $scope.datadefinition.Header[$scope.datadefinition.Header.length - 1];
                 columnProperties.field = 'No';
                 columnProperties.cellTemplate = '<div class="ui-grid-cell-contents text-center">{{row.entity.No = (grid.appScope.currentPage == 1 ? (grid.renderContainers.body.visibleRowCache.indexOf(row) + 1) : ((grid.renderContainers.body.visibleRowCache.indexOf(row) + 1) + ((grid.appScope.currentPage - 1) * grid.appScope.pageSize)))}}</div>';
-                columnProperties.width = 40;
+                columnProperties.width = 45;
                 columnProperties.enableColumnResizing = true;
                 columnProperties.enableColumnMenu = false;
                 columnProperties.enableColumnMoving = false;

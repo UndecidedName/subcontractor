@@ -42,7 +42,7 @@ class Vessel_voyage_controller extends CI_Controller {
 		else
 			$skip = ($length - 1) * $this->take;
 
-		$sql = "SELECT * FROM vessel WHERE VesselId='".$vesselId."' LIMIT ".$skip.",".$this->take;
+		$sql = "SELECT * FROM vesselvoyage WHERE VesselId='".$vesselId."' LIMIT ".$skip.",".$this->take;
 
 		$result = $this->vv->retrieve($sql);
 
@@ -68,7 +68,7 @@ class Vessel_voyage_controller extends CI_Controller {
 		$vesselvoyage 		= json_decode($data, true);
 		
 		//Set shipping line information
-		$this->vv->setVessel(0, $vesselvoyage['VesselId'], $vesselvoyage['EstimatedDeparture'], $vesselvoyage['EstimatedArrival'], $vesselvoyage['Departure'], $vesselvoyage['Arrival'], $vesselvoyage['Status']);
+		$this->vv->setVesselVoyage(0, $vesselvoyage['VesselId'], $vesselvoyage['EstimatedDeparture'], $vesselvoyage['EstimatedArrival'], $vesselvoyage['Departure'], $vesselvoyage['Arrival'], $vesselvoyage['Status']);
 		//Save shipping line information
 		$result = $this->vv->save();
 
@@ -92,10 +92,10 @@ class Vessel_voyage_controller extends CI_Controller {
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$data 				= file_get_contents('php://input', true);
-		$vessel 		= json_decode($data, true);
+		$vesselvoyage 		= json_decode($data, true);
 
 		//Set shipping line information
-		$this->vv->setVessel($Id, $vesselvoyage['VesselId'], $vesselvoyage['EstimatedDeparture'], $vesselvoyage['EstimatedArrival'], $vesselvoyage['Departure'], $vesselvoyage['Arrival'], $vesselvoyage['Status']);
+		$this->vv->setVesselVoyage($Id, $vesselvoyage['VesselId'], $vesselvoyage['EstimatedDeparture'], $vesselvoyage['EstimatedArrival'], $vesselvoyage['Departure'], $vesselvoyage['Arrival'], $vesselvoyage['Status']);
 		//Edit shipping line information
 		$result = $this->vv->edit();
 
@@ -103,7 +103,7 @@ class Vessel_voyage_controller extends CI_Controller {
 			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
 		else
 		{
-			$vesselItem = $vessel;
+			$vesselItem = $vesselvoyage;
 			$response['status'] = "SUCCESS";
 			$response['data'] = $vesselItem;
 		}

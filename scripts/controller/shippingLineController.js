@@ -28,8 +28,8 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
     };
     $scope.initShippingLineParameters = function()
     {
-        $scope.tabPages     = ['General', 'Vessel'];
-        $scope.selectedTab  = "General";
+        $scope.tabPages     = ['Information', 'Vessel'];
+        $scope.selectedTab  = "Information";
         $scope.show         = false;
 
          //-------------------------dirDataGrid1 for Shipping Line Paramaters-------------------------
@@ -166,8 +166,8 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
     $scope.initVesselParameters = function()
     {
         //-------------------------dirDataGrid1 for Vessel Paramaters-------------------------
-        $scope.tabPagesVessel     = ['General', 'Voyage', 'Attachments'];
-        $scope.selectedTabVessel  = "General";
+        $scope.tabPagesVessel     = ['Information', 'Voyage', 'Attachments'];
+        $scope.selectedTabVessel  = "Information";
         $scope.showVessel   = false;
 
         $scope.submitButtonTextVessel = "";
@@ -307,8 +307,8 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
     $scope.initVoyageParameters = function()
     {
         //-------------------------dirDataGrid1 for Voyage Paramaters-------------------------
-        $scope.tabPagesVoyage     	= ['General'];
-        $scope.selectedTabVoyage  	= "General";
+        $scope.tabPagesVoyage     	= ['Information'];
+        $scope.selectedTabVoyage  	= "Information";
         $scope.showVoyage   		= false;
 
         $scope.submitButtonTextVoyage = "";
@@ -370,10 +370,10 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                     $scope.dataDefinitionVoyage.DataItem.VesselId = $scope.dataDefinitionVessel.DataItem.Id;
                     return true;
                 case 'PostSave':
-                    $scope.selectedTabVoyage = $scope.tabPagesVoyage[1];
+                    $scope.showVoyage = false;
                     return true;
                 case 'PostUpdate':
-                    $scope.selectedTabVoyage = $scope.tabPagesVoyage[1];
+                    $scope.showVoyage = false;
                     return true;
                 default:
                     return true;

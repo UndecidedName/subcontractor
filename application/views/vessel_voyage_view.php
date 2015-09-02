@@ -27,44 +27,110 @@
                                                {{errorMessageVoyage}}
                                         </div>
                                         <div class="row">
-                                                <div class="col-lg-12">
-                                                    <form class="form-horizontal" role="form">
-                                                        <div class="form-group form-group-sm">
-                                                            <label class="col-md-1 control-label small">Name</label>
-                                                            <div class="col-md-4">
-                                                                <input type="text"
-                                                                       class="form-control"
-                                                                       placeholder=""
-                                                                       ng-model="dataDefinition.DataItem.Name"
-                                                                       ng-disabled="dataDefinition.ViewOnly"
-                                                                       pattern=".{0,255}"
-                                                                       ng-change="initializeHeaderName()">
-                                                            </div>
+                                          <div class="col-lg-6">
+                                            <form class="form-horizontal" role="form">
+                                              <div class="form-group form-group-sm">
+                                                  <label class="col-md-4 control-label small">Estimated Departure</label>
+                                                  <div class="col-md-6">
+                                                      <div class='input-group date'>
+                                                          <input type='text'
+                                                                 id='ed'
+                                                                 class="form-control"
+                                                                 ng-model="dataDefinitionVoyage.DataItem.EstimatedDeparture"
+                                                                 ng-disabled="viewonly" />
+                                                          <span class="input-group-addon" title="Close" style="padding:2px 10px 2px 10px;">
+                                                              <span class=" glyphicon glyphicon-remove-circle"></span>
+                                                          </span>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="form-group form-group-sm">
+                                                  <label class="col-md-4 control-label small">Estimated Arrival</label>
+                                                  <div class="col-md-6">
+                                                      <div class='input-group date'>
+                                                          <input type='text'
+                                                                 id='ea'
+                                                                 class="form-control"
+                                                                 ng-model="dataDefinitionVoyage.DataItem.EstimatedArrival"
+                                                                 ng-disabled="viewonly" />
+                                                          <span class="input-group-addon" title="Close" style="padding:2px 10px 2px 10px;">
+                                                              <span class=" glyphicon glyphicon-remove-circle"></span>
+                                                          </span>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="form-group form-group-sm">
+                                                  <div class="checkbox-custom">
+                                                      <label for="isActive"
+                                                             class="col-md-4 control-label small" style="padding-right: 20px;">Is Active?</label>
+                                                      <input id="isActive"
+                                                             type="checkbox"
+                                                             style="width: 45px;"
+                                                             ng-model="dataDefinitionVessel.DataItem.StatusHolder"
+                                                             ng-disabled="dataDefinition.ViewOnly">
+                                                  </div>
+                                              </div>
+                                            </form>
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <form class="form-horizontal" role="form">
+                                              <div class="form-group form-group-sm">
+                                                    <label class="col-md-4 control-label small">Departure</label>
+                                                    <div class="col-md-6">
+                                                        <div class='input-group date'>
+                                                            <input type='text'
+                                                                   id='departure'
+                                                                   class="form-control"
+                                                                   ng-model="dataDefinitionVoyage.DataItem.Departure"
+                                                                   ng-disabled="viewonly" />
+                                                            <span class="input-group-addon" title="Close" style="padding:2px 10px 2px 10px;">
+                                                                <span class=" glyphicon glyphicon-remove-circle"></span>
+                                                            </span>
                                                         </div>
-                                                        <div class="form-group form-group-sm">
-                                                            <label class="col-md-1 control-label small">Address</label>
-                                                            <div class="col-md-9">
-                                                                <input type="text"
-                                                                       class="form-control"
-                                                                       placeholder=""
-                                                                       ng-model="dataDefinition.DataItem.Address"
-                                                                       ng-disabled="dataDefinition.ViewOnly"
-                                                                       pattern=".{0,255}">
-                                                            </div>
+                                                    </div>
+                                              </div>
+                                              <div class="form-group form-group-sm">
+                                                    <label class="col-md-4 control-label small">Arrival</label>
+                                                    <div class="col-md-6">
+                                                        <div class='input-group date'>
+                                                            <input type='text'
+                                                                   id='arrival'
+                                                                   class="form-control"
+                                                                   ng-model="dataDefinitionVoyage.DataItem.Arrival"
+                                                                   ng-disabled="viewonly" />
+                                                            <span class="input-group-addon" title="Close" style="padding:2px 10px 2px 10px;">
+                                                                <span class=" glyphicon glyphicon-remove-circle"></span>
+                                                            </span>
                                                         </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="checkbox-custom">
-                                                                <label for="isActive"
-                                                                       class="small" style="padding-right: 20px;">Is Active?</label>
-                                                                <input id="isActive"
-                                                                       type="checkbox"
-                                                                       ng-model="dataDefinition.DataItem.StatusHolder"
-                                                                       ng-disabled="dataDefinition.ViewOnly">
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                              </div>
+                                            </form>
+                                          </div>
                                         </div>
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $('#ed').datetimepicker({
+                                                    format: 'MM-DD-YYYY HH:mm:ss',
+                                                    sideBySide: true,
+                                                    //minDate: moment()
+                                                })
+                                                 $('#ea').datetimepicker({
+                                                    format: 'MM-DD-YYYY HH:mm:ss',
+                                                    sideBySide: true,
+                                                    //minDate: moment()
+                                                })
+                                                 $('#departure').datetimepicker({
+                                                    format: 'MM-DD-YYYY HH:mm:ss',
+                                                    sideBySide: true,
+                                                    //minDate: moment()
+                                                })
+                                                 $('#arrival').datetimepicker({
+                                                    format: 'MM-DD-YYYY HH:mm:ss',
+                                                    sideBySide: true,
+                                                    //minDate: moment()
+                                                })
+                                            });
+                                        </script>
                                 </div>
                                 <!--End of General -->
                         </div>

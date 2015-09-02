@@ -36,7 +36,7 @@
                                                                        class="form-control"
                                                                        placeholder=""
                                                                        ng-model="dataDefinitionVessel.DataItem.Name"
-                                                                       ng-disabled="dataDefinition.ViewOnly"
+                                                                       ng-disabled="dataDefinitionVessel.ViewOnly"
                                                                        pattern=".{0,255}">
                                                             </div>
                                                         </div>
@@ -47,7 +47,7 @@
                                                                        class="form-control"
                                                                        placeholder=""
                                                                        ng-model="dataDefinitionVessel.DataItem.Description"
-                                                                       ng-disabled="dataDefinition.ViewOnly"
+                                                                       ng-disabled="dataDefinitionVessel.ViewOnly"
                                                                        pattern=".{0,255}">
                                                             </div>
                                                         </div>
@@ -58,7 +58,7 @@
                                                                 <input id="isActive"
                                                                        type="checkbox"
                                                                        ng-model="dataDefinitionVessel.DataItem.StatusHolder"
-                                                                       ng-disabled="dataDefinition.ViewOnly">
+                                                                       ng-disabled="dataDefinitionVessel.ViewOnly">
                                                             </div>
                                                         </div>
                                                     </form>
