@@ -1,0 +1,22 @@
+2015-08-23 01:32:27	SELECT * FROM shippingline LIMIT 0,20
+2015-08-23 01:40:35	SELECT * FROM shippingline LIMIT 0,20
+2015-08-23 01:40:39	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
+2015-08-23 01:40:45	UPDATE shippingline SET Name='For testing Edited',Address='For testing....',Status='1' WHERE Id='38'
+2015-08-23 06:25:02	SELECT * FROM shippingline LIMIT 0,20
+2015-08-23 06:25:08	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
+2015-08-23 06:25:52	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
+2015-08-24 08:23:04	SELECT * FROM shippingline LIMIT 0,20
+2015-08-24 08:23:08	SELECT * FROM vessel WHERE ShippingLineId='37' LIMIT 0,20
+2015-09-02 06:37:25	SELECT * FROM shippingline LIMIT 0,20
+2015-09-02 06:38:04	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
+2015-09-02 06:38:08	UPDATE shippingline SET Name='For testing',Address='For testing....',Status='1' WHERE Id='38'
+2015-09-02 06:38:18	UPDATE vessel SET Name='For testing vessel',ShippingLineId='38',Description='For testing vessel',Status='1' WHERE Id='6'
+2015-09-02 06:40:17	SELECT * FROM shippingline LIMIT 0,20
+2015-09-02 06:40:26	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
+2015-09-02 06:40:50	INSERT INTO vessel(Name,ShippingLineId,Description,Status) VALUES('xx','38','xxx','1')
+2015-09-02 06:41:00	DELETE FROM vessel WHERE Id='7'
+2015-09-02 06:41:01	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
+2015-09-02 06:41:32	SELECT * FROM shippingline LIMIT 0,20
+2015-09-02 06:41:35	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
+2015-09-02 06:41:38	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
+2015-09-02 06:41:50	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
