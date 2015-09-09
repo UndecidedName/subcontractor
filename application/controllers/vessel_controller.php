@@ -21,7 +21,7 @@ class Vessel_controller extends CI_Controller {
 	private $take;
 	public function __construct(){
 		parent::__construct();
-		//create Shipping_line instance
+		//create Vessel instance
 		$this->load->model('Vessel', 'v');
 	}
 
@@ -30,17 +30,17 @@ class Vessel_controller extends CI_Controller {
 		$this->load->view('vessel_view');
 	}
 
-	public function getVessels($length, $shippingLineId)
+	public function getVessels($page, $shippingLineId)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$vessel = array();
 		$this->take = 20;
 
-		if($length == 1)
+		if($page == 1)
 			$skip = 0;
 		else
-			$skip = ($length - 1) * $this->take;
+			$skip = ($page - 1) * $this->take;
 
 		$sql = "SELECT * FROM vessel WHERE ShippingLineId='".$shippingLineId."' LIMIT ".$skip.",".$this->take;
 
@@ -50,7 +50,7 @@ class Vessel_controller extends CI_Controller {
 			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
 		else
 		{
-			while($row = $result->fetch_assoc())
+			foreach($result->result() as $row)
 			{
 				$vessel[] = $row;
 			}
@@ -67,16 +67,16 @@ class Vessel_controller extends CI_Controller {
 		$data 				= file_get_contents('php://input', true);
 		$vessel 		= json_decode($data, true);
 
-		//Set shipping line information
+		//Set vessel information
 		$this->v->setVessel(0, $vessel['ShippingLineId'], $vessel['Name'], $vessel['Description'], $vessel['Status']);
-		//Save shipping line information
+		//Save vessel information
 		$result = $this->v->save();
 
 		if($result == false)
 			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
 		else
 		{
-			while($row = $result->fetch_assoc())
+			foreach($result->result() as $row)
 			{
 				$vesselItem = $row;
 			}
@@ -94,9 +94,9 @@ class Vessel_controller extends CI_Controller {
 		$data 				= file_get_contents('php://input', true);
 		$vessel 		= json_decode($data, true);
 
-		//Set shipping line information
+		//Set vessel information
 		$this->v->setVessel($Id, $vessel['ShippingLineId'], $vessel['Name'], $vessel['Description'], $vessel['Status']);
-		//Edit shipping line information
+		//Edit vessel information
 		$result = $this->v->edit();
 
 		if($result == false)
@@ -115,7 +115,7 @@ class Vessel_controller extends CI_Controller {
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 
-		//Edit shipping line information
+		//Edit vessel information
 		$result = $this->v->delete($Id);
 
 		if($result == false)

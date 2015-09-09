@@ -54,6 +54,7 @@
 <script src="/subcontractor/libs/js/bootstrap.min.js"></script>
 <script src="/subcontractor/libs/moment/moment.js"></script>
 <script src="/subcontractor/libs/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/subcontractor/libs/js/ajaxfileupload.js"></script>
 <script src="/subcontractor/libs/js/spin.min.js"></script>
 <script src="/subcontractor/libs/angular/angular.min.js"></script>
 <script src="/subcontractor/libs/angular/angular-ui-router.min.js"></script>

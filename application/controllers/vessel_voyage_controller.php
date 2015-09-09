@@ -21,7 +21,7 @@ class Vessel_voyage_controller extends CI_Controller {
 	private $take;
 	public function __construct(){
 		parent::__construct();
-		//create Shipping_line instance
+		//create vessel voyage instance
 		$this->load->model('Vessel_voyage', 'vv');
 	}
 
@@ -30,17 +30,17 @@ class Vessel_voyage_controller extends CI_Controller {
 		$this->load->view('vessel_voyage_view');
 	}
 
-	public function getVessels($length, $vesselId)
+	public function getVesselVoyages($page, $vesselId)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$vessel = array();
 		$this->take = 20;
 
-		if($length == 1)
+		if($page == 1)
 			$skip = 0;
 		else
-			$skip = ($length - 1) * $this->take;
+			$skip = ($page - 1) * $this->take;
 
 		$sql = "SELECT * FROM vesselvoyage WHERE VesselId='".$vesselId."' LIMIT ".$skip.",".$this->take;
 
@@ -50,7 +50,7 @@ class Vessel_voyage_controller extends CI_Controller {
 			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
 		else
 		{
-			while($row = $result->fetch_assoc())
+			foreach($result->result() as $row)
 			{
 				$vessel[] = $row;
 			}
@@ -60,23 +60,23 @@ class Vessel_voyage_controller extends CI_Controller {
 		echo json_encode($response);
 	}
 
-	public function postVessel()
+	public function postVesselVoyage()
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$data 				= file_get_contents('php://input', true);
 		$vesselvoyage 		= json_decode($data, true);
 		
-		//Set shipping line information
+		//Set vessel voyage information
 		$this->vv->setVesselVoyage(0, $vesselvoyage['VesselId'], $vesselvoyage['EstimatedDeparture'], $vesselvoyage['EstimatedArrival'], $vesselvoyage['Departure'], $vesselvoyage['Arrival'], $vesselvoyage['Status']);
-		//Save shipping line information
+		//Save vessel voyage information
 		$result = $this->vv->save();
 
 		if($result == false)
 			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
 		else
 		{
-			while($row = $result->fetch_assoc())
+			foreach($result->result() as $row)
 			{
 				$vesselItem = $row;
 			}
@@ -87,16 +87,15 @@ class Vessel_voyage_controller extends CI_Controller {
 		echo json_encode($response);
 	}
 
-	public function putVessel($Id)
+	public function putVesselVoyage($Id)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$data 				= file_get_contents('php://input', true);
 		$vesselvoyage 		= json_decode($data, true);
-
-		//Set shipping line information
+		//Set vessel voyage information
 		$this->vv->setVesselVoyage($Id, $vesselvoyage['VesselId'], $vesselvoyage['EstimatedDeparture'], $vesselvoyage['EstimatedArrival'], $vesselvoyage['Departure'], $vesselvoyage['Arrival'], $vesselvoyage['Status']);
-		//Edit shipping line information
+		//Edit vessel voyage information
 		$result = $this->vv->edit();
 
 		if($result == false)
@@ -110,12 +109,12 @@ class Vessel_voyage_controller extends CI_Controller {
 		echo json_encode($response);
 	}
 
-	public function deleteVessel($Id)
+	public function deleteVesselVoyage($Id)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 
-		//Edit shipping line information
+		//delete vessel voyage information
 		$result = $this->vv->delete($Id);
 
 		if($result == false)

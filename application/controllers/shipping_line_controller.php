@@ -30,28 +30,27 @@ class Shipping_line_controller extends CI_Controller {
 		$this->load->view('shipping_line_view');
 	}
 
-	public function getShippingLines($length)
+	public function getShippingLines($page)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$shippingLine = array();
 		$this->take = 20;
 
-		if($length == 1)
+		if($page == 1)
 			$skip = 0;
 		else
-			$skip = ($length - 1) * $this->take;
+			$skip = ($page - 1) * $this->take;
 
 		$sql = "SELECT * FROM shippingline LIMIT ".$skip.",".$this->take;
 
 		$result = $this->sl->retrieve($sql);
-
+	
 		if($result == false)
 			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
 		else
 		{
-			while($row = $result->fetch_assoc())
-			{
+			foreach ($result->result() as $row) {
 				$shippingLine[] = $row;
 			}
 			$response['status'] = "SUCCESS";
@@ -76,7 +75,7 @@ class Shipping_line_controller extends CI_Controller {
 			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
 		else
 		{
-			while($row = $result->fetch_assoc())
+			foreach($result->result() as $row)
 			{
 				$shippingLineItem = $row;
 			}
@@ -115,7 +114,7 @@ class Shipping_line_controller extends CI_Controller {
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 
-		//Edit shipping line information
+		//delete shipping line information
 		$result = $this->sl->delete($Id);
 
 		if($result == false)

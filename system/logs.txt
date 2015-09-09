@@ -1,6 +1,0 @@
-2015-09-02 08:09:28	UPDATE vesselvoyage SET VesselId='6',EstimatedDeparture='09-02-2015 16:08:41',EstimatedArrival='09-02-2015 16:08:41',Departure='09-02-2015 16:08:42',Arrival='09-02-2015 16:08:42',Status='1' WHERE Id=''
-2015-09-02 08:09:49	UPDATE vesselvoyage SET VesselId='6',EstimatedDeparture='09-02-2015 16:08:41',EstimatedArrival='09-02-2015 16:08:41',Departure='09-02-2015 16:08:42',Arrival='09-02-2015 16:08:42',Status='1' WHERE Id=''
-2015-09-02 08:10:23	SELECT * FROM shippingline LIMIT 0,20
-2015-09-02 08:10:26	SELECT * FROM vessel WHERE ShippingLineId='38' LIMIT 0,20
-2015-09-02 08:10:28	SELECT * FROM vesselvoyage WHERE VesselId='6' LIMIT 0,20
-2015-09-02 08:10:43	UPDATE vesselvoyage SET VesselId='6',EstimatedDeparture='09-02-2015 16:10:24',EstimatedArrival='09-02-2015 16:10:24',Departure='09-02-2015 16:10:24',Arrival='09-02-2015 16:10:24',Status='1' WHERE Id=''

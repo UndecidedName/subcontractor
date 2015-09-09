@@ -1,5 +1,5 @@
 subconApp.controller("ShippingLineController", ShippingLineController);
-function ShippingLineController($rootScope, $scope, $http, $compile)
+function ShippingLineController($filter, $rootScope, $scope, $http, $compile, $interval)
 {
     $scope.modelhref    = '#/shippingline';
 
@@ -23,7 +23,7 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                     'resetdata="resetDataItem()"' +
                     'showformerror="showFormError(error)">' +
                 '</dir-data-grid1>'
-        $content = angular.element(document.querySelector('#ShippiLineDataGrid')).html(html);
+        $content = angular.element(document.querySelector('#ShippingLineDataGrid')).html(html);
         $compile($content)($scope);
     };
     $scope.initShippingLineParameters = function()
@@ -51,8 +51,8 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                                     "DataItem": {},
                                     "DataTarget": "DataTableShippingLine",
                                     "ViewOnly": false,
-                                    "ContextMenu": [],
-                                    "ContextMenuLabel": []
+                                    "ContextMenu": ["'Load'", "'Create'", "'Edit'", "'Delete'", "'View'"],
+                                    "ContextMenuLabel": ['Reload', 'Create', 'Edit', 'Delete', 'View']
                                 };
 
         $scope.setSelectedTab = function (tab) {
@@ -111,8 +111,7 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                     $scope.setSelectedTab($scope.tabPages[1]);
                     return true;
                 default:
-                    return true;
-                    
+                    return true;    
             }
         };
         $scope.resetDataItem = function () {
@@ -188,8 +187,8 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                                     "DataItem": {},
                                     "DataTarget": "DataTableVessel",
                                     "ViewOnly": false,
-                                    "ContextMenu": [],
-                                    "ContextMenuLabel": []
+                                    "ContextMenu": ["'Load'", "'Create'", "'Edit'", "'Delete'", "'View'"],
+                                    "ContextMenuLabel": ['Reload', 'Create', 'Edit', 'Delete', 'View']
                                 };
 
         $scope.setSelectedTabVessel = function (tab) {
@@ -213,6 +212,10 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
             if (element != null) {
                 element.parentNode.removeChild(element);
             }
+            var element = document.getElementById("attachmentGrid");
+            if (element != null) {
+                element.parentNode.removeChild(element);
+            }
         }
         $scope.otherActionsVessel = function (action) {
             switch (action) {
@@ -230,12 +233,15 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                     return true;
 				case 'PostEditAction':
                     $scope.loadVoyage();
+                    $scope.loadAttachment();
                     return true;
                 case 'PostViewAction':
                     $scope.loadVoyage();
+                    $scope.loadAttachment();
                     return true;
                 case 'PostDeleteAction':
                     $scope.loadVoyage();
+                    $scope.loadAttachment();
                     return true;
                 case 'PreSave':
                     delete $scope.dataDefinitionVessel.DataItem.Id;
@@ -244,6 +250,7 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                 case 'PostSave':
                     $scope.selectedTabVessel = $scope.tabPagesVessel[1];
 					$scope.loadVoyage();
+                    $scope.loadAttachment();
                     return true;
                 case 'PostUpdate':
                     $scope.selectedTabVessel = $scope.tabPagesVessel[1];
@@ -329,8 +336,8 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                                     "DataItem": {},
                                     "DataTarget": "DataTableVoyage",
                                     "ViewOnly": false,
-                                    "ContextMenu": [],
-                                    "ContextMenuLabel": []
+                                    "ContextMenu": ["'Load'", "'Create'", "'Edit'", "'Delete'", "'View'"],
+                                    "ContextMenuLabel": ['Reload', 'Create', 'Edit', 'Delete', 'View']
                                 };
 
         $scope.setSelectedTabVoyage = function (tab) {
@@ -358,6 +365,11 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
                         $scope.dataDefinitionVoyage.DataItem.Status = 1;
                     else
                         $scope.dataDefinitionVoyage.DataItem.Status = 0;
+                    $scope.dataDefinitionVoyage.EstimatedDeparture  = $filter('date')(document.getElementById('ed').value, "yyyy-MM-dd HH:mm:ss");
+                    $scope.dataDefinitionVoyage.EstimatedArrival    = $filter('date')(document.getElementById('ea').value, "yyyy-MM-dd HH:mm:ss");
+                    $scope.dataDefinitionVoyage.Arrival             = $filter('date')(document.getElementById('arrival').value, "yyyy-MM-dd HH:mm:ss");
+                    $scope.dataDefinitionVoyage.Departure           = $filter('date')(document.getElementById('departure').value, "yyyy-MM-dd HH:mm:ss");
+                    
                     return true;
                 case 'PostAction':
                     if($scope.dataDefinitionVoyage.DataItem.Status == 1)
@@ -408,7 +420,142 @@ function ShippingLineController($rootScope, $scope, $http, $compile)
         };
         //---------------------------------End----------------------------------------
     };
-	
+
+    $scope.loadAttachment = function()
+    {
+        $scope.loadAttachmentDataGrid();
+        $scope.initAttachmentParameters();
+    };
+    //Compile Attachment DataGrid
+    $scope.loadAttachmentDataGrid = function()
+    {
+        var html = '', $content;
+        html = '<div id="attachmentGrid"><dir-data-grid1 actioncreate="actionCreateAttachment"' +
+                    'actionmode="actionModeAttachment"' +
+                    'datadefinition="dataDefinitionAttachment"' +
+                    'submitbuttontext="submitButtonTextAttachment"' +
+                    'submitbuttonlistener="submitButtonListenerAttachment"' +
+                    'closecontainer="closeAttachmentForm()"' + 
+                    'opencontainer="showAttachmentForm()"' +
+                    'otheractions="otherActionsAttachment(action)"' +
+                    'resetdata="resetAttachmentItem()"' +
+                    'showformerror="showFormErrorAttachment(error)">' +
+                '</dir-data-grid1></div>';
+        $content = angular.element(document.querySelector('#AttachmentDataGrid')).html(html);
+        $compile($content)($scope);
+    }
+
+    $scope.initAttachmentParameters = function()
+    {
+        //-------------------------dirDataGrid1 for Attachment Paramaters-------------------------
+        $scope.tabPagesAttachment     = ['Information'];
+        $scope.selectedTabAttachment  = "Information";
+        $scope.showAttachment   = false;
+
+        $scope.submitButtonTextAttachment = "";
+        $scope.submitButtonListenerAttachment = false;
+        $scope.isErrorAttachment = false;
+        $scope.errorMessageAttachment = "";
+        $scope.actionCreateAttachment = false; //default to false
+        $scope.actionModeAttachment = "Create";//default to Create
+        $scope.dataDefinitionAttachment = {
+                                    "Header": ['File Name', 'No.'],
+                                    "Keys": ['FileName'],
+                                    "Type": ['String'],
+                                    "RequiredFields": [],
+                                    "DataList": [],
+                                    "APIUrl": ['/subcontractor/attachment/ /' + $scope.dataDefinitionVessel.DataItem.Id,//get
+                                               '/subcontractor/attachment' //CUD
+                                    ],
+                                    "DataItem": {},
+                                    "DataTarget": "DataTableAttachment",
+                                    "ViewOnly": false,
+                                    "ContextMenu": ["'Load'", "'Create'", "'Delete'", "'View'"],
+                                    "ContextMenuLabel": ['Reload', 'Upload', 'Delete Attachment', 'Open Attachment']
+                                };
+
+        $scope.setSelectedTabAttachment = function (tab) {
+            if($scope.dataDefinitionAttachment.DataItem.Id != null)
+            {
+                $scope.selectedTabAttachment = tab; 
+            }
+        };
+
+        $scope.showAttachmentForm = function()
+        {
+            $scope.showAttachment = true;
+        };
+
+        $scope.closeAttachmentForm = function()
+        {
+            $scope.showAttachment = false;
+            $scope.isErrorAttachment = false;
+            $scope.errorMessageAttachment = "";
+        };
+        $scope.otherActionsAttachment = function (action) {
+            switch (action) {
+                case 'PreSave':
+                    var attachment = document.getElementById('attachment').files[0];
+                    if(angular.isDefined(attachment))
+                    {
+                        $scope.dataDefinitionAttachment.DataItem.FileName       = attachment.name;
+                        $scope.dataDefinitionAttachment.DataItem.ReferenceId    = $scope.dataDefinitionVessel.DataItem.Id;
+                        $scope.dataDefinitionAttachment.DataItem.Type           = "S";
+                    }
+                    else
+                    {
+                        $scope.isErrorAttachment = true;
+                        $scope.errorMessageAttachment = "Attachment is required.";  
+                    }
+                    return true;
+                case 'PostSave':
+                    $scope.showAttachment = false;
+                    $.ajaxFileUpload({
+                        url             : '/subcontractor/attachment/upload/shippingline', 
+                        secureuri       : false,
+                        fileElementId   : 'attachment',
+                        dataType: 'JSON',
+                        success : function (data)
+                        {
+                        }
+                    });
+                    return true;
+                case 'PostViewAction':
+                    var win = window.open("attachment/display/" + $scope.dataDefinitionAttachment.DataItem.FileName + "/S", '_blank');
+                    win.focus();
+                    $scope.closeAttachmentForm();
+                    return true;
+                default:
+                    return true;
+            }
+        };
+        $scope.resetAttachmentItem = function () {
+            $scope.dataDefinitionAttachment.DataItem = {
+                "Id": null,
+                "ReferenceId": null,
+                "Type": null,
+                "FileName": null,
+                "FilePath": null
+            }
+        };
+        $scope.showFormErrorAttachment = function (message) {
+            $scope.isErrorAttachment = true;
+            $scope.errorMessageAttachment = message;
+        };
+        //-------------------------End of dirDataGrid1 Attachment Parameters-------------------
+
+        //----------Functions that are related to dirDataGrid1-----------------------
+
+        $scope.submitAttachment = function () {
+            $scope.submitButtonListenerAttachment = true;
+        };
+
+        $scope.actionFormAttachment = function () {
+            $scope.actionCreateAttachment = true;
+        };
+        //---------------------------------End----------------------------------------
+    };
+
     $rootScope.manipulateDOM();
     $scope.loadShippingLine(); 
 }

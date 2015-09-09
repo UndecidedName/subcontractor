@@ -8,7 +8,7 @@
 
 <!-- Shipping Line List -->
 <div ng-show = "!show">
-    <div id="ShippiLineDataGrid"></div>
+    <div id="ShippingLineDataGrid"></div>
 </div>
 <!-- End of Shipping Line List -->
 

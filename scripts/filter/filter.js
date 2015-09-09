@@ -71,3 +71,23 @@ subconApp.filter('StatusMaintenance', function ($filter) {
 
     }
 });
+
+subconApp.filter('TruckType', function ($filter) {
+    return function (value) {
+        if (value == "" || value == null)
+            return "";
+        var truckType = [{"Id": 1, "Name": "Small Trucks"},
+                        {"Id": 2, "Name": "Light Trucks"},
+                        {"Id": 3, "Name": "Medium Trucks"},
+                        {"Id": 4, "Name": "Heave Trucks"},
+                        {"Id": 5, "Name": "Very Heavy Trucks"},
+                        {"Id": 6, "Name": "Very Heavy Transporters"},
+                       ]
+
+        for(var i = 0; i < truckType.length; i++)
+        {
+            if(value == truckType[i].Id)
+                return truckType[i].Name;
+        }
+    }
+});

@@ -69,7 +69,7 @@
             showformerror: '&',         //function that will trigger when an error occured
         },
         templateUrl: '/subcontractor/directive/dataGrid1',
-        controller: function ($scope, $http, $interval, $filter, $parse, $compile) {
+        controller: function ($filter, $scope, $http, $interval, $parse, $compile) {
             var stop;
             $scope.currentPage = 1;
             $scope.pageSize = 20;
@@ -81,9 +81,8 @@
             $scope.selectedIndex = null;
             $scope.filteredValue = "";
             $scope.gridOptions = {};
-            $scope.contextMenuDefault = ["'Load'", "'Create'", "'Edit'", "'Delete'", "'View'"];
-            $scope.contextMenuLabelDefault = ['Reload', 'Create', 'Edit', 'Delete', 'View'];
-
+            //$scope.contextMenuDefault = ["'Load'", "'Create'", "'Edit'", "'Delete'", "'View'"];
+            //$scope.contextMenuLabelDefault = ['Reload', 'Create', 'Edit', 'Delete', 'View'];
             //Set the focus on top of the page during load
             $scope.focusOnTop = function () {
                 $(document).ready(function () {
@@ -92,10 +91,10 @@
             };
 
             //Initialize addtional context-menu item
-            for (var i = 0; i < $scope.datadefinition.ContextMenu.length; i ++){
+            /*for (var i = 0; i < $scope.datadefinition.ContextMenu.length; i ++){
                 $scope.contextMenuDefault.push($scope.datadefinition.ContextMenu[i]);
                 $scope.contextMenuLabelDefault.push($scope.datadefinition.ContextMenuLabel[i]);
-            }
+            }*/
 
             //Initialize ui-grid options
             $scope.initGridOptions = function () {
@@ -189,6 +188,9 @@
                         break;
                     case 'Maintenance':
                         format = "StatusMaintenance";
+                        break;
+                    case 'TruckType':
+                        format = "TruckType";
                         break;
                     default:
                         format = 'Default';
@@ -348,9 +350,9 @@
                 $http.post($scope.datadefinition.APIUrl[1], $scope.datadefinition.DataItem)
                     .success(function (response, status) {
                         if (response.status == "SUCCESS") {
-                            $scope.datadefinition.DataItem.Id = response.data.Id;
+                            $scope.datadefinition.DataItem = response.data;
                             $scope.datadefinition.DataList.push($scope.datadefinition.DataItem);
-                            $scope.gridOptions.response = $scope.datadefinition.DataList;
+                            $scope.gridOptions.data = $scope.datadefinition.DataList;
                             //reload pagination of datasource is greater than pageSize
                             if ($scope.datadefinition.DataList.length > $scope.pageSize)
                                 $scope.loadData($scope.currentPage);
@@ -493,16 +495,16 @@
             //Write the Context-Menu in DOM
             $scope.createContextMenu = function () {
                 var htmlScript = "", $content = "";
-                for (var i = 0; i < $scope.contextMenuDefault.length; i++) {
+                for (var i = 0; i < $scope.datadefinition.ContextMenu.length; i++) {
                     if (i == 0) {
-                        htmlScript = '<ul class="dropdown-menu" role="menu"> <li> <a class="pointer small" role="menuitem" tabindex="' + i + '" ' + 'ng-click="actionForm(' + $scope.contextMenuDefault[i] + ')">'
-                                    + $scope.contextMenuLabelDefault[i] + '</a></li>';
+                        htmlScript = '<ul class="dropdown-menu" role="menu"> <li> <a class="pointer small" role="menuitem" tabindex="' + i + '" ' + 'ng-click="actionForm(' + $scope.datadefinition.ContextMenu[i] + ')">'
+                                    + $scope.datadefinition.ContextMenuLabel[i] + '</a></li>';
                         htmlScript = htmlScript + '<li class="divider"></li>';
                     }
                     else {
-                        htmlScript = htmlScript + '<li> <a class="pointer small" role="menuitem" tabindex="' + i + '" ' + 'ng-click="actionForm(' + $scope.contextMenuDefault[i] + ')">'
-                                    + $scope.contextMenuLabelDefault[i] + '</a></li>';
-                        if (i == 4 && ($scope.contextMenuDefault.length -1) != i)
+                        htmlScript = htmlScript + '<li> <a class="pointer small" role="menuitem" tabindex="' + i + '" ' + 'ng-click="actionForm(' + $scope.datadefinition.ContextMenu[i] + ')">'
+                                    + $scope.datadefinition.ContextMenuLabel[i] + '</a></li>';
+                        if (i == 4 && ($scope.datadefinition.ContextMenu.length -1) != i)
                             htmlScript = htmlScript + '<li class="divider"></li>';
                     }
                 }

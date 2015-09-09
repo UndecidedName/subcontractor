@@ -74,12 +74,12 @@
                                 </div>
                                 <!--End of Vessel Voyage-->
 
-                                <!-- Vessel Voyage-->
+                                <!-- Vessel Attachment-->
                                 <div class="{{selectedTabVessel == tabPagesVessel[2] ? 'tab-pane active' : 'tab-pane active'}}" ng-show = "selectedTabVessel == tabPagesVessel[2]">
                                 	<br/>
-                                    Render Attachment here
+                                    <div ng-include="'/subcontractor/attachment/view'"></div>
                                 </div>
-                                <!--End of Vessel Voyage-->
+                                <!--End of Vessel Attachment-->
                         </div>
 						<div ng-show = "selectedTabVessel == tabPagesVessel[0]" class="row">
 							<hr></hr>
