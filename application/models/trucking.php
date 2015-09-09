@@ -148,15 +148,34 @@
 		{
 			if($this->db->conn_id)
 			{
-				//$sql = "DELETE FROM trucking WHERE Id='".$Id."'";
-				$sql = "DELETE trucking, truck, attachment FROM trucking LEFT JOIN truck ON trucking.Id = truck.TruckingId LEFT JOIN attachment ON truck.Id = attachment.ReferenceId WHERE trucking.Id ='".$Id."'";
-				//Execute query
+				$file_path = array();
+				$sql = "SELECT attachment.FilePath as FilePath FROM trucking LEFT JOIN truck ON trucking.Id = truck.TruckingId LEFT JOIN attachment ON truck.Id = attachment.ReferenceId WHERE trucking.Id ='".$Id."'";
 				$query = $this->db->query($sql);
+
 				if($query)
 				{
 					file_put_contents(BASEPATH.'logs.txt', date("Y-m-d H:i:s")."\t".$sql."\n", FILE_APPEND);
-					$this->db->close();
-					return $query;
+					foreach ($query->result() as $row) {
+						$file_path[] = $row->FilePath;
+					}
+					$sql = "DELETE trucking, truck, attachment FROM trucking LEFT JOIN truck ON trucking.Id = truck.TruckingId LEFT JOIN attachment ON truck.Id = attachment.ReferenceId WHERE trucking.Id ='".$Id."'";
+					//Execute query
+					$query = $this->db->query($sql);
+					if($query)
+					{
+						file_put_contents(BASEPATH.'logs.txt', date("Y-m-d H:i:s")."\t".$sql."\n", FILE_APPEND);
+						$this->db->close();
+						for($i = 0; $i < sizeof($file_path); $i++)
+							unlink($file_path[$i]);
+						return $query;
+					}
+					else
+					{
+						$error = $this->db->error();
+			 			file_put_contents(BASEPATH.'error.txt', date("Y-m-d H:i:s")."\t".$error['message']."\n", FILE_APPEND);
+						$this->db->close();
+						return false;
+					}
 				}
 				else
 				{
