@@ -175,7 +175,10 @@
 						file_put_contents(BASEPATH.'logs.txt', date("Y-m-d H:i:s")."\t".$sql."\n", FILE_APPEND);
 						$this->db->close();
 						for($i = 0; $i < sizeof($file_path); $i++)
-							unlink($file_path[$i]);
+						{
+							if($file_path[$i] != "")
+								unlink($file_path[$i]);
+						}
 						return $query;
 					}
 					else
