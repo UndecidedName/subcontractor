@@ -33,17 +33,18 @@ class Attachment_controller extends CI_Controller {
 		$this->load->view('attachment_view', array('error' => ' ' ));
 	}
 
-	public function getAttachments($page, $referenceId)
+	public function getAttachments($length, $referenceId)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$attachment = array();
 		$this->take = 20;
+		$skip = $length;
 
-		if($page == 1)
+		/*if($page == 1)
 			$skip = 0;
 		else
-			$skip = ($page - 1) * $this->take;
+			$skip = ($page - 1) * $this->take;*/
 
 		$sql = "SELECT * FROM attachment WHERE ReferenceId = '".$referenceId."' LIMIT ".$skip.",".$this->take;
 

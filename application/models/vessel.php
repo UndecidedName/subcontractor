@@ -79,12 +79,13 @@
 		{
 			if($this->db->conn_id)
 			{
-				$sql = "UPDATE vessel SET ";
-				$sql = $sql."Name='".$this->getName()."',";	
-				$sql = $sql."ShippingLineId='".$this->getShippingLineId()."',";
-				$sql = $sql."Description='".$this->getDescription()."',";
-				$sql = $sql."Status='".$this->getStatus()."' ";
-				$sql = $sql."WHERE Id='".$this->getId()."'";
+				$sql = "UPDATE vessel INNER JOIN vesselvoyage SET ";
+				$sql = $sql."vessel.Name='".$this->getName()."',";	
+				$sql = $sql."vessel.ShippingLineId='".$this->getShippingLineId()."',";
+				$sql = $sql."vessel.Description='".$this->getDescription()."',";
+				$sql = $sql."vessel.Status='".$this->getStatus()."',";
+				$sql = $sql."vesselvoyage.Status='".$this->getStatus()."' ";
+				$sql = $sql."WHERE vessel.Id='".$this->getId()."'";
 				//Execute query
 				$query = $this->db->query($sql);
 				if($query)

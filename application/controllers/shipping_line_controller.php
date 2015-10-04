@@ -30,31 +30,39 @@ class Shipping_line_controller extends CI_Controller {
 		$this->load->view('shipping_line_view');
 	}
 
-	public function getShippingLines($page)
+	public function getShippingLines($length)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$shippingLine = array();
 		$this->take = 20;
+		$skip = $length;
+		/*$sql = "SELECT COUNT(Id) FROM shippingline";
+		$result = $this->sl->retrieve($sql, false);
 
-		if($page == 1)
-			$skip = 0;
-		else
-			$skip = ($page - 1) * $this->take;
-
-		$sql = "SELECT * FROM shippingline LIMIT ".$skip.",".$this->take;
-
-		$result = $this->sl->retrieve($sql);
-	
-		if($result == false)
-			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
-		else
+		foreach($result->result_array() as $row)
+			$records = $row['COUNT(Id)'];
+		if($records > $length)
 		{
-			foreach ($result->result() as $row) {
-				$shippingLine[] = $row;
+			if (($records - $length) > 20)
+	            $this->take = 20;
+	        else
+	            $this->take = $records - $length;*/
+
+			$sql = "SELECT * FROM shippingline LIMIT ".$skip.",".$this->take;
+
+			$result = $this->sl->retrieve($sql, true);
+		
+			if($result == false)
+				$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
+			else
+			{
+				foreach ($result->result() as $row) {
+					$shippingLine[] = $row;
+				}
+				$response['status'] = "SUCCESS";
 			}
-			$response['status'] = "SUCCESS";
-		}
+		//}
 		$response['data'] = $shippingLine;
 		echo json_encode($response);
 	}

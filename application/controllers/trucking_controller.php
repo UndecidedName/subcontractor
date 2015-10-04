@@ -31,17 +31,17 @@ class Trucking_controller extends CI_Controller {
 		$this->load->view('trucking_view');
 	}
 
-	public function getTruckings($page)
+	public function getTruckings($length)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$trucking = array();
 		$this->take = 20;
-
-		if($page == 1)
+		$skip = $length;
+		/*if($page == 1)
 			$skip = 0;
 		else
-			$skip = ($page - 1) * $this->take;
+			$skip = ($page - 1) * $this->take;*/
 
 		$sql = "SELECT * FROM trucking LIMIT ".$skip.",".$this->take;
 

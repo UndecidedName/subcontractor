@@ -30,17 +30,18 @@ class Vessel_voyage_controller extends CI_Controller {
 		$this->load->view('vessel_voyage_view');
 	}
 
-	public function getVesselVoyages($page, $vesselId)
+	public function getVesselVoyages($length, $vesselId)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$vessel = array();
 		$this->take = 20;
+		$skip = $length;
 
-		if($page == 1)
+		/*if($page == 1)
 			$skip = 0;
 		else
-			$skip = ($page - 1) * $this->take;
+			$skip = ($page - 1) * $this->take;*/
 
 		$sql = "SELECT * FROM vesselvoyage WHERE VesselId='".$vesselId."' LIMIT ".$skip.",".$this->take;
 

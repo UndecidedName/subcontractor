@@ -81,8 +81,9 @@
             $scope.selectedIndex = null;
             $scope.filteredValue = "";
             $scope.gridOptions = {};
-            //$scope.contextMenuDefault = ["'Load'", "'Create'", "'Edit'", "'Delete'", "'View'"];
-            //$scope.contextMenuLabelDefault = ['Reload', 'Create', 'Edit', 'Delete', 'View'];
+            $scope.retrieving = false;
+            $scope.scrolled = false;
+            
             //Set the focus on top of the page during load
             $scope.focusOnTop = function () {
                 $(document).ready(function () {
@@ -90,11 +91,15 @@
                 });
             };
 
-            //Initialize addtional context-menu item
-            /*for (var i = 0; i < $scope.datadefinition.ContextMenu.length; i ++){
-                $scope.contextMenuDefault.push($scope.datadefinition.ContextMenu[i]);
-                $scope.contextMenuLabelDefault.push($scope.datadefinition.ContextMenuLabel[i]);
-            }*/
+            //Function that binds ui-grid template during scroll
+            $scope.onScroll = function () {
+                if($scope.retrieving == false)
+                {
+                    $scope.retrieving = true;
+                    $scope.scrolled = true;
+                    $scope.loadData();
+                }
+            };
 
             //Initialize ui-grid options
             $scope.initGridOptions = function () {
@@ -103,7 +108,7 @@
                 var columnProperties = {};
                 columnProperties.name = $scope.datadefinition.Header[$scope.datadefinition.Header.length - 1];
                 columnProperties.field = 'No';
-                columnProperties.cellTemplate = '<div class="ui-grid-cell-contents text-center">{{row.entity.No = (grid.appScope.currentPage == 1 ? (grid.renderContainers.body.visibleRowCache.indexOf(row) + 1) : ((grid.renderContainers.body.visibleRowCache.indexOf(row) + 1) + ((grid.appScope.currentPage - 1) * grid.appScope.pageSize)))}}</div>';
+                columnProperties.cellTemplate = '<div class="ui-grid-cell-contents text-center">{{row.entity.No = (grid.renderContainers.body.visibleRowCache.indexOf(row) + 1)}}</div>';
                 columnProperties.width = 45;
                 columnProperties.enableColumnResizing = true;
                 columnProperties.enableColumnMenu = false;
@@ -114,6 +119,7 @@
                     var columnProperties = {};
                     columnProperties.name = $scope.datadefinition.Header[i];
                     columnProperties.field = $scope.datadefinition.Keys[i];
+                    //columnProperties.width = $scope.datadefinition.ColWidth[i];
                     //format field value
                     columnProperties.cellFilter = $scope.filterValue($scope.datadefinition.Type[i]);
                     columns.push(columnProperties);
@@ -130,16 +136,16 @@
                     enableGridMenu: true,
                     enableSelectAll: true,
                     exporterCsvFilename: 'myFile.csv',
-                    exporterPdfDefaultStyle: { fontSize: 9 },
+                    exporterPdfDefaultStyle: { fontSize: 8 },
                     exporterPdfTableStyle: { margin: [0, 0, 0, 0] },
                     exporterPdfTableHeaderStyle: { fontSize: 12, bold: true, italics: true, color: 'black' },
-                    exporterPdfHeader: { text: "Fast Cargo", style: 'headerStyle' },
+                    exporterPdfHeader: { text: "Subcontractor", style: 'headerStyle' },
                     exporterPdfFooter: function (currentPage, pageCount) {
                         return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
                     },
                     exporterPdfCustomFormatter: function (docDefinition) {
-                        docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
-                        docDefinition.styles.footerStyle = { fontSize: 22, bold: true };
+                        docDefinition.styles.headerStyle = { fontSize: 16, bold: true };
+                        docDefinition.styles.footerStyle = { fontSize: 12, bold: true };
                         return docDefinition;
                     },
                     exporterPdfOrientation: 'landscape',
@@ -213,23 +219,31 @@
             };
 
             //Load data
-            $scope.loadData = function (page) {
+            $scope.loadData = function () {
                 var spinner = new Spinner(opts).spin(spinnerTarget);
                 var url = "";
                 var apiUrlSplit = $scope.datadefinition.APIUrl[0].split(" ");
-                url = apiUrlSplit[0] + page;
+                url = apiUrlSplit[0] + ($scope.scrolled == true ? $scope.datadefinition.DataList.length : 0);
                 for (var i = 1; i < apiUrlSplit.length; i++)
                     url = url + apiUrlSplit[i];
                 $http.get(url)
                     .success(function (response, status) {
                         if(response.status == "SUCCESS")
                         {
-                            $scope.datadefinition.DataList = [];
-                            $scope.datadefinition.DataList = response.data;
-                            $scope.gridOptions.data = $scope.datadefinition.DataList;
-                            //setHeight(100);
-                            $scope.processPagination();
-                            $scope.focusOnTop();
+                            if($scope.scrolled == true){
+                                for(var j = 0; j < response.data.length; j++)
+                                    $scope.datadefinition.DataList.push(response.data[j]);
+                                $scope.scrolled = false;
+                            }
+                            else{
+                                $scope.datadefinition.DataList = [];
+                                $scope.datadefinition.DataList = response.data;
+                                $scope.focusOnTop();
+                            }
+                            for(var i = 0; i < $scope.datadefinition.DataList.length; i++)
+                                $scope.datadefinition.DataList[i].No = i + 1;
+                            $scope.retrieving = false;
+                            $scope.forceScroll();
                         }
                         spinner.stop();
                     })
@@ -237,6 +251,21 @@
                         spinner.stop();
                         $scope.showformerror({ error: status });
                     })
+            };
+
+            //function that will force scroll the datagrid
+            $scope.forceScroll = function () {
+                $(document).ready(function () {
+                    var element = $("div.ui-grid-viewport")[0];
+                    var element1 = $("div.ui-grid-viewport");
+                    if (element.scrollTop != 0) {
+                        var promise = $interval(function () {
+                            element1.scrollTop(element.scrollTop + 10);
+                            $interval.cancel(promise);
+                            promise = undefined;
+                        }, 100)
+                    }
+                });
             };
 
             //search data
@@ -285,8 +314,9 @@
             $scope.actionForm = function (action) {
                 //It should be outside of the PreAction statement
                 if (action == 'Load') {
+                    $scope.datadefinition.DataList = [];
                     if ($scope.otheractions({ action: 'PreLoadAction' }))
-                        $scope.loadData($scope.currentPage)
+                        $scope.loadData()
                     //set interval to make sure that the get call returns data before triggering some actions
                     stop = $interval(function () {
                         if ($scope.datadefinition.DataList.length > 0) {
@@ -354,8 +384,8 @@
                             $scope.datadefinition.DataList.push($scope.datadefinition.DataItem);
                             $scope.gridOptions.data = $scope.datadefinition.DataList;
                             //reload pagination of datasource is greater than pageSize
-                            if ($scope.datadefinition.DataList.length > $scope.pageSize)
-                                $scope.loadData($scope.currentPage);
+                            //if ($scope.datadefinition.DataList.length > $scope.pageSize)
+                                //$scope.loadData($scope.currentPage);
                             //setHeight(100);
                             //$scope.closecontainer();
                             spinner.stop();
@@ -407,7 +437,7 @@
                         if (response.status == "SUCCESS") {
                             $scope.datadefinition.DataList.splice($scope.selectedIndex, 1);
                             //reload pagination of datasource is greater than pageSize
-                            $scope.loadData($scope.currentPage);
+                            //$scope.loadData($scope.currentPage);
                             $scope.closecontainer();
                             spinner.stop();
                             $scope.otheractions({ action: 'PostDelete' });
@@ -517,6 +547,7 @@
 
             //Listener that will check if user Submit an action
             $interval(function () {
+                $scope.gridOptions.data = angular.copy($scope.datadefinition.DataList);
                 if ($scope.submitbuttonlistener == true) {
                     //reset listener to false
                     $scope.submitbuttonlistener = false;

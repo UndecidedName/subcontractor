@@ -32,6 +32,7 @@
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
+            <div class="text-center"><h3>Subcontractor Maintenance</h3></div>
             <div class="row">
                 <div class="col-md-12 text-right">
                 	<a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
@@ -66,5 +67,6 @@
 <script src="/subcontractor/scripts/main/app.js"></script>
 <script src="/subcontractor/scripts/filter/filter.js"></script>
 <script src="/subcontractor/scripts/directive/dataGrid1.js"></script>
+<script src="/subcontractor/scripts/directive/scrollableContainer.js"></script>
 <script src="/subcontractor/scripts/controller/shippingLineController.js"></script>
 <script src="/subcontractor/scripts/controller/truckingController.js"></script>

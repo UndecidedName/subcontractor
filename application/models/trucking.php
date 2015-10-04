@@ -71,11 +71,21 @@
 		{
 			if($this->db->conn_id)
 		 	{
-				$sql = "UPDATE trucking SET ";
-				$sql = $sql."Name='".$this->getName()."',";	
-				$sql = $sql."Address='".$this->getAddress()."',";
-				$sql = $sql."Status='".$this->getStatus()."' ";
-				$sql = $sql."WHERE Id='".$this->getId()."'";
+		 		//if($this->getStatus() == 0){
+					$sql = "UPDATE trucking LEFT JOIN truck ON trucking.Id = truck.TruckingId SET ";
+					$sql = $sql."trucking.Name='".$this->getName()."',";	
+					$sql = $sql."trucking.Address='".$this->getAddress()."',";
+					$sql = $sql."truck.Status='".$this->getStatus()."',";
+					$sql = $sql."trucking.Status='".$this->getStatus()."' ";
+					$sql = $sql."WHERE trucking.Id='".$this->getId()."'";
+				/*}
+				else{
+					$sql = "UPDATE trucking SET ";
+					$sql = $sql."Name='".$this->getName()."',";	
+					$sql = $sql."Address='".$this->getAddress()."',";
+					$sql = $sql."Status='".$this->getStatus()."' ";
+					$sql = $sql."WHERE Id='".$this->getId()."'";
+				}*/
 				//Execute query
 				$query = $this->db->query($sql);
 				if($query)

@@ -30,17 +30,18 @@ class Truck_controller extends CI_Controller {
 		$this->load->view('truck_view');
 	}
 
-	public function getTrucks($page, $truckingId)
+	public function getTrucks($length, $truckingId)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
 		$truck = array();
 		$this->take = 20;
+		$skip = $length;
 
-		if($page == 1)
+		/*if($page == 1)
 			$skip = 0;
 		else
-			$skip = ($page - 1) * $this->take;
+			$skip = ($page - 1) * $this->take;*/
 
 		$sql = "SELECT * FROM truck WHERE TruckingId='".$truckingId."' LIMIT ".$skip.",".$this->take;
 

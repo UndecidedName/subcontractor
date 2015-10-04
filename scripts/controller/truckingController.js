@@ -115,7 +115,7 @@ function TruckingController($filter, $rootScope, $scope, $http, $compile, $inter
                     $scope.loadTruck();
                     return true;
                 case 'PostUpdate':
-                    $scope.setSelectedTab($scope.tabPages[1]);
+                    $scope.show = false;
                     return true;
                 default:
                     return true;    
@@ -254,7 +254,7 @@ function TruckingController($filter, $rootScope, $scope, $http, $compile, $inter
                     $scope.loadAttachment();
                     return true;
                 case 'PostUpdate':
-                    $scope.selectedTabTruck = $scope.tabPagesTruck[1];
+                    $scope.showTruck = false;
                     return true;
                 default:
                     return true;
@@ -340,7 +340,7 @@ function TruckingController($filter, $rootScope, $scope, $http, $compile, $inter
                                     "DataTarget": "DataTableAttachment",
                                     "ViewOnly": false,
                                     "ContextMenu": ["'Load'", "'Create'", "'Delete'", "'View'"],
-                                    "ContextMenuLabel": ['Reload', 'Upload', 'Delete Attachment', 'Open Attachment']
+                                    "ContextMenuLabel": ['Reload', 'New Attachment', 'Delete Attachment', 'Open Attachment']
                                 };
 
         $scope.setSelectedTabAttachment = function (tab) {

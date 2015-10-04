@@ -15,6 +15,7 @@
                     Create
                 </button>
             </div>
+            <!--
             <div class="btn-group btn-group-sm">
                 <div class="myTableCell-no-padding text-right small">
                     <button class="btn btn-primary btn-sm"
@@ -40,6 +41,7 @@
                     </button>
                 </div>
             </div>
+            -->
         </div>
     </div>
 </div><br />

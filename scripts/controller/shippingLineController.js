@@ -108,7 +108,7 @@ function ShippingLineController($filter, $rootScope, $scope, $http, $compile, $i
                     $scope.loadVessel();
                     return true;
                 case 'PostUpdate':
-                    $scope.setSelectedTab($scope.tabPages[1]);
+                    $scope.show = false;
                     return true;
                 default:
                     return true;    
@@ -253,7 +253,7 @@ function ShippingLineController($filter, $rootScope, $scope, $http, $compile, $i
                     $scope.loadAttachment();
                     return true;
                 case 'PostUpdate':
-                    $scope.selectedTabVessel = $scope.tabPagesVessel[1];
+                    $scope.showVessel = false;
                     return true;
                 default:
                     return true;
@@ -471,7 +471,7 @@ function ShippingLineController($filter, $rootScope, $scope, $http, $compile, $i
                                     "DataTarget": "DataTableAttachment",
                                     "ViewOnly": false,
                                     "ContextMenu": ["'Load'", "'Create'", "'Delete'", "'View'"],
-                                    "ContextMenuLabel": ['Reload', 'Upload', 'Delete Attachment', 'Open Attachment']
+                                    "ContextMenuLabel": ['Reload', 'New Attachment', 'Delete Attachment', 'Open Attachment']
                                 };
 
         $scope.setSelectedTabAttachment = function (tab) {
