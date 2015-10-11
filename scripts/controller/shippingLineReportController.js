@@ -26,10 +26,10 @@ function ShippingLineReportController($scope, $compile, $interval){
     $scope.initShippingLineDataGrid = function () {
         $scope.initializeShippingLineDataDefinition = function () {
             $scope.shippingLineDataDefinition = {
-                "Header": ['Shipping Line', 'Vessel', 'Est. Date of Departure', 'Est. Date of Arrival', 'Departure', 'Arrival', 'Status', 'No.'],
-                "Keys": ['ShippingLineName', 'VesselName', 'EDD', 'EDA', 'Departure', 'Arrival', 'STATUS'],
-                "Type": ['ProperCase', 'ProperCase', 'DateTime', 'DateTime', 'DateTime', 'DateTime', 'StatusMaintenance'],
-                "ColWidth": [200, 200, 200, 200, 150, 150, 150],
+                "Header": ['Shipping Line', 'Vessel', 'Est. Date of Departure', 'Est. Date of Arrival', 'Departure', 'Arrival', 'Status', 'Vessel Status', 'Voyage Status', 'No.'],
+                "Keys": ['ShippingLineName', 'VesselName', 'EDD', 'EDA', 'Departure', 'Arrival', 'Status', 'VesselStatus', 'VesselVoyageStatus'],
+                "Type": ['ProperCase', 'ProperCase', 'DateTime', 'DateTime', 'DateTime', 'DateTime', 'StatusMaintenance', 'StatusMaintenance', 'StatusMaintenance'],
+                "ColWidth": [200, 200, 200, 200, 150, 150, 150, 150, 150],
                 "DataList": [],
                 "RequiredFields": [],
                 "CellTemplate": ["None"],
@@ -141,6 +141,10 @@ function ShippingLineReportController($scope, $compile, $interval){
                             { "Index": 5, "Label": "Arrival", "Column": "Arrival", "Values": [], "From": null, "To": null, "Type": "Date" },
                             { "Index": 6, "Label": "Status", "Column": "Status", "Values": [{ "Id": 1, "Name": "Active" },
                             																{ "Id": 0, "Name": "Inactive" }], "From": null, "To": null, "Type": "DropDown" },
+                            { "Index": 7, "Label": "Vessel Status", "Column": "VesselStatus", "Values": [{ "Id": 1, "Name": "Active" },
+                                                                                            { "Id": 0, "Name": "Inactive" }], "From": null, "To": null, "Type": "DropDown" },
+                            { "Index": 8, "Label": "Voyage Status", "Column": "VesselVoyageStatus", "Values": [{ "Id": 1, "Name": "Active" },
+                                                                                            { "Id": 0, "Name": "Inactive" }], "From": null, "To": null, "Type": "DropDown" },
                 ],//Contains the Criteria definition
                 "Multiple": true,
                 "AutoLoad": false,
@@ -182,6 +186,12 @@ function ShippingLineReportController($scope, $compile, $interval){
             				case "Status":
             					$scope.shippingLineFilteringDefinition.DataItem1.Status = $scope.shippingLineSource[i].From;
                 				break;
+                            case "VesselStatus":
+                                $scope.shippingLineFilteringDefinition.DataItem1.VesselStatus = $scope.shippingLineSource[i].From;
+                                break;
+                            case "VesselVoyageStatus":
+                                $scope.shippingLineFilteringDefinition.DataItem1.VesselVoyageStatus = $scope.shippingLineSource[i].From;
+                                break;
                 			default: break;
                 		}
                     }
@@ -202,6 +212,8 @@ function ShippingLineReportController($scope, $compile, $interval){
                     $scope.shippingLineFilteringDefinition.Url += '/' + $scope.shippingLineFilteringDefinition.DataItem1.DepartureTo;
                     $scope.shippingLineFilteringDefinition.Url += '/' + $scope.shippingLineFilteringDefinition.DataItem1.ArrivalTo;
                     $scope.shippingLineFilteringDefinition.Url += '/' + $scope.shippingLineFilteringDefinition.DataItem1.Status;
+                    $scope.shippingLineFilteringDefinition.Url += '/' + $scope.shippingLineFilteringDefinition.DataItem1.VesselStatus;
+                    $scope.shippingLineFilteringDefinition.Url += '/' + $scope.shippingLineFilteringDefinition.DataItem1.VesselVoyageStatus;
                     return true;
                 case 'PostFilterData':
                     /*Note: if pagination, initialize shippingLineDataDefinition DataList by copying the DataList of filterDefinition then 
@@ -243,7 +255,9 @@ function ShippingLineReportController($scope, $compile, $interval){
 	                                    "EDATo": null,
 	                                    "DepartureTo": null,
 	                                    "ArrivalTo": null,
-	                                    "Status": null
+	                                    "Status": null,
+                                        "VesselStatus": null,
+                                        "VesselVoyageStatus": null
             						}
             $scope.shippingLineFilteringDefinition.DataItem1 = angular.copy($scope.shippingLineObj);
         };

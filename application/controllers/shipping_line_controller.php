@@ -72,7 +72,7 @@ class Shipping_line_controller extends CI_Controller {
 		echo json_encode($response);
 	}
 
-	public function getShippingLineList($length, $ShippingLineName, $VesselName, $EDDFrom, $EDAFrom, $DepartureFrom, $ArrivalFrom, $EDDTo, $EDATo, $DepartureTo, $ArrivalTo, $Status)
+	public function getShippingLineList($length, $ShippingLineName, $VesselName, $EDDFrom, $EDAFrom, $DepartureFrom, $ArrivalFrom, $EDDTo, $EDATo, $DepartureTo, $ArrivalTo, $Status, $VesselStatus, $VesselVoyageStatus)
 	{
 		header('Content-Type: application/json');
 		$response['status'] = "FAILURE";
@@ -103,6 +103,12 @@ class Shipping_line_controller extends CI_Controller {
 
 		if($Status != 'null')
 			$whereClause .= "AND Status = '".$Status."'";
+
+		if($VesselStatus != 'null')
+			$whereClause .= "AND VesselStatus = '".$VesselStatus."'";
+
+		if($VesselVoyageStatus != 'null')
+			$whereClause .= "AND VesselVoyageStatus = '".$VesselVoyageStatus."'";
 
 		$sql = "SELECT * FROM v_shippingline WHERE ".$whereClause." LIMIT ".$skip.",".$this->take;
 
