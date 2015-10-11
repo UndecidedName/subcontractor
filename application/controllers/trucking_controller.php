@@ -65,6 +65,45 @@ class Trucking_controller extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function getTruckingList($length, $TruckingName, $TruckName, $TruckingStatus, $TruckStatus)
+	{
+		header('Content-Type: application/json');
+		$response['status'] = "FAILURE";
+		$trucking = array();
+		$this->take = 20;
+		$skip = $length;
+		$whereClause = "";
+
+		if($TruckingName != 'null')
+			$whereClause .= "TruckingName LIKE '%".str_replace("%20"," ",$TruckingName)."%'";
+		else
+			$whereClause .= "TruckingName LIKE '%' ";
+
+		if($TruckName != 'null')
+			$whereClause .= "AND TruckName LIKE '%".str_replace("%20"," ",$TruckName)."%'";
+
+		if($TruckingStatus != 'null')
+			$whereClause .= "AND TruckingStatus = '".$TruckingStatus."'";
+
+		if($TruckStatus != 'null')
+			$whereClause .= "AND TruckStatus = '".$TruckStatus."'";
+
+		$sql = "SELECT * FROM v_trucking WHERE ".$whereClause." LIMIT ".$skip.",".$this->take;
+
+		$result = $this->t->retrieve($sql);
+	
+		if($result == false)
+			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
+		else
+		{
+			foreach ($result->result() as $row) {
+				$trucking[] = $row;
+			}
+			$response['status'] = "SUCCESS";
+		}
+		$response['data'] = $trucking;
+		echo json_encode($response);
+	}
 	public function postTrucking()
 	{
 		header('Content-Type: application/json');

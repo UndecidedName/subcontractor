@@ -194,7 +194,7 @@ subconApp.directive('dirFiltering', function () {
                         .error(function(error, status){
                             $scope.retrieving = false;
                             $scope.isErrorFiltering = true;
-                            $scope.errorMessageFiltering = jqXHR.status;
+                            $scope.errorMessageFiltering = status;
                             spinner.stop();
                         })
                         /*var dataModel1 = $scope.filterdefinition.DataItem1;
