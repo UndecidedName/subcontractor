@@ -27,6 +27,12 @@
 				<li>
 				    <a ui-sref="ShippingLine" style="font-size: 16px; cursor: pointer;">Shipping Line</a>
 				</li>
+                <li>
+                    <a ui-sref="TruckingReport" style="font-size: 16px; cursor: pointer;">Trucking Report</a>
+                </li>   
+                <li>
+                    <a ui-sref="ShippingLineReport" style="font-size: 16px; cursor: pointer;">Shipping Line Report</a>
+                </li>
         	</ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -67,6 +73,10 @@
 <script src="/subcontractor/scripts/main/app.js"></script>
 <script src="/subcontractor/scripts/filter/filter.js"></script>
 <script src="/subcontractor/scripts/directive/dataGrid1.js"></script>
+<script src="/subcontractor/scripts/directive/dataGrid2.js"></script>
+<script src="/subcontractor/scripts/directive/dataFiltering.js"></script>
 <script src="/subcontractor/scripts/directive/scrollableContainer.js"></script>
 <script src="/subcontractor/scripts/controller/shippingLineController.js"></script>
 <script src="/subcontractor/scripts/controller/truckingController.js"></script>
+<script src="/subcontractor/scripts/controller/shippingLineReportController.js"></script>
+<script src="/subcontractor/scripts/controller/truckingReportController.js"></script>

@@ -37,6 +37,18 @@ subconApp.config(function ($stateProvider, $urlRouterProvider) {
         templateUrl: "/subcontractor/shippingline/view",
         controller: "ShippingLineController"
     })
+     //Trucking
+    .state('TruckingReport', {
+        url: "/truckingreport",
+        templateUrl: "/subcontractor/trucking/report",
+        controller: "TruckingReportController"
+    })
+    //Shipping Line
+    .state('ShippingLineReport', {
+        url: "/shippinglinereport",
+        templateUrl: "/subcontractor/shippingline/report",
+        controller: "ShippingLineReportController"
+    })
 
 
 });

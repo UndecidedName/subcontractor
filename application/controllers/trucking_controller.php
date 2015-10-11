@@ -31,6 +31,11 @@ class Trucking_controller extends CI_Controller {
 		$this->load->view('trucking_view');
 	}
 
+	public function report()
+	{
+		$this->load->view('trucking_report_view');
+	}
+
 	public function getTruckings($length)
 	{
 		header('Content-Type: application/json');

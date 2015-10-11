@@ -32,4 +32,12 @@ class Landing_page_controller extends CI_Controller {
 	{
 		$this->load->view('data_grid1_view');
 	}
+	public function dataGrid2()
+	{
+		$this->load->view('data_grid2_view');
+	}
+	public function dataFiltering()
+	{
+		$this->load->view('data_filtering_view');
+	}
 }

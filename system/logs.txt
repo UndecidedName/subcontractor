@@ -1,0 +1,11 @@
+2015-10-11 09:10:23	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%Gothong%' LIMIT 0,20
+2015-10-11 09:10:36	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%Gothong%'AND VesselName LIKE '%Gothong Southern Vessel 1%' LIMIT 0,20
+2015-10-11 09:10:47	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%Gothong%'AND VesselName LIKE '%Gothong Southern Vessel 1%'AND Status = '0' LIMIT 0,20
+2015-10-11 09:10:56	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%Gothong%'AND VesselName LIKE '%Gothong Southern Vessel 1%'AND Status = '1' LIMIT 0,20
+2015-10-11 09:11:06	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%Gothong%'AND VesselName LIKE '%Gothong Southern Vessel 1%'AND Status = '1' LIMIT 0,20
+2015-10-11 09:11:21	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%Gothong Southern Vessel 1%'AND VesselName LIKE '%Gothong Southern Vessel 1%'AND Status = '1' LIMIT 0,20
+2015-10-11 09:11:29	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%' AND Status = '1' LIMIT 0,20
+2015-10-11 09:11:40	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%' AND Status = '0' LIMIT 0,20
+2015-10-11 09:11:46	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%' AND Status = '1' LIMIT 0,20
+2015-10-11 09:14:26	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%gothong%' LIMIT 0,20
+2015-10-11 09:15:04	SELECT * FROM v_shippingline WHERE ShippingLineName LIKE '%gothong%' LIMIT 0,20

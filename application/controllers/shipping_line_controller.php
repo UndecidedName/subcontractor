@@ -30,6 +30,11 @@ class Shipping_line_controller extends CI_Controller {
 		$this->load->view('shipping_line_view');
 	}
 
+	public function report()
+	{
+		$this->load->view('shipping_line_report_view');
+	}
+
 	public function getShippingLines($length)
 	{
 		header('Content-Type: application/json');
@@ -51,7 +56,7 @@ class Shipping_line_controller extends CI_Controller {
 
 			$sql = "SELECT * FROM shippingline LIMIT ".$skip.",".$this->take;
 
-			$result = $this->sl->retrieve($sql, true);
+			$result = $this->sl->retrieve($sql);
 		
 			if($result == false)
 				$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
@@ -63,6 +68,55 @@ class Shipping_line_controller extends CI_Controller {
 				$response['status'] = "SUCCESS";
 			}
 		//}
+		$response['data'] = $shippingLine;
+		echo json_encode($response);
+	}
+
+	public function getShippingLineList($length, $ShippingLineName, $VesselName, $EDDFrom, $EDAFrom, $DepartureFrom, $ArrivalFrom, $EDDTo, $EDATo, $DepartureTo, $ArrivalTo, $Status)
+	{
+		header('Content-Type: application/json');
+		$response['status'] = "FAILURE";
+		$shippingLine = array();
+		$this->take = 20;
+		$skip = $length;
+		$whereClause = "";
+
+		if($ShippingLineName != 'null')
+			$whereClause .= "ShippingLineName LIKE '%".str_replace("%20"," ",$ShippingLineName)."%'";
+		else
+			$whereClause .= "ShippingLineName LIKE '%' ";
+
+		if($VesselName != 'null')
+			$whereClause .= "AND VesselName LIKE '%".str_replace("%20"," ",$VesselName)."%'";
+
+		if($EDDFrom != 'null')
+			$whereClause .= "AND EstimatedDeparture BETWEEN '".$EDDFrom."' AND '".$EDDTo."'";
+
+		if($EDAFrom != 'null')
+			$whereClause .= "AND EstimatedArrival BETWEEN '".$EDAFrom."' AND '".$EDATo."'";
+
+		if ($DepartureFrom != 'null')
+			$whereClause .= "AND Departure BETWEEN '".$DepartureFrom."' AND '".$DepartureTo."'";
+
+		if ($ArrivalFrom != 'null')
+			$whereClause .= "AND Arrival BETWEEN '".$ArrivalFrom."' AND '".$ArrivalTo."'";
+
+		if($Status != 'null')
+			$whereClause .= "AND Status = '".$Status."'";
+
+		$sql = "SELECT * FROM v_shippingline WHERE ".$whereClause." LIMIT ".$skip.",".$this->take;
+
+		$result = $this->sl->retrieve($sql);
+	
+		if($result == false)
+			$response['message'] = "A database error has occured, please contact IT adminstrator immediately.";
+		else
+		{
+			foreach ($result->result() as $row) {
+				$shippingLine[] = $row;
+			}
+			$response['status'] = "SUCCESS";
+		}
 		$response['data'] = $shippingLine;
 		echo json_encode($response);
 	}

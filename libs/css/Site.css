@@ -56,3 +56,9 @@
     background: #4A89DC none repeat scroll 0% 0%;
     color:white;
 }
+.toggle-hide {
+    padding-top: 5px; 
+    color:blue; 
+    cursor:pointer; 
+    text-decoration: underline;
+}
