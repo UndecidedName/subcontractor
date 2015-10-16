@@ -43,8 +43,10 @@ subconApp.directive('dirFiltering', function () {
                 $scope.filteredData = { "Definition": $scope.filterdefinition.Source[0] };
                 $scope.dropDownValue = null;
                 $scope.dropDownValueObject = {};
-                $scope.fromDate = $filter('Date')(new Date());
-                $scope.toDate = $filter('Date')(new Date());
+                var fromDate  = new Date();
+                var toDate = new Date();
+                $scope.fromDate = fromDate.getFullYear() + "-" + (fromDate.getMonth() + 1 > 9 ? fromDate.getMonth() + 1 : ("0" + (fromDate.getMonth() + 1))) + "-" + fromDate.getDate();
+                $scope.toDate = toDate.getFullYear() + "-" + (fromDate.getMonth() + 1 > 9 ? fromDate.getMonth() + 1 : ("0" + (fromDate.getMonth() + 1))) + "-" + toDate.getDate();
                 $scope.searchValue = "";
                 $scope.showFilterDate = false;
                 $scope.showFilterDropDown = false;

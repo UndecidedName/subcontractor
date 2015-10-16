@@ -1,6 +1,0 @@
-2015-10-03 08:22:07	
-2015-10-03 08:22:35	
-2015-10-11 06:25:00	You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20' at line 1
-2015-10-11 07:05:29	You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20' at line 1
-2015-10-11 07:06:47	You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20' at line 1
-2015-10-11 07:06:51	You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '20' at line 1

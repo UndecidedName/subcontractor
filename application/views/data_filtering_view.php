@@ -121,14 +121,14 @@
                 <script type="text/javascript">
                     $(function () {
                         $('#fromDate').datetimepicker({
-                            format: 'MM/DD/YYYY',
+                            format: 'YYYY-MM-DD',
                             sideBySide: false,
                             pickTime: false,
                             setDate: new Date(),
                             //minDate: moment()
                         })
                         $('#toDate').datetimepicker({
-                            format: 'MM/DD/YYYY',
+                            format: 'YYYY-MM-DD',
                             sideBySide: false,
                             pickTime: false,
                             setDate: new Date(),

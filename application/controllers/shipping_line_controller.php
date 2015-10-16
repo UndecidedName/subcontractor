@@ -90,10 +90,10 @@ class Shipping_line_controller extends CI_Controller {
 			$whereClause .= "AND VesselName LIKE '%".str_replace("%20"," ",$VesselName)."%'";
 
 		if($EDDFrom != 'null')
-			$whereClause .= "AND EstimatedDeparture BETWEEN '".$EDDFrom."' AND '".$EDDTo."'";
+			$whereClause .= "AND EDD BETWEEN '".$EDDFrom."' AND '".$EDDTo."'";
 
 		if($EDAFrom != 'null')
-			$whereClause .= "AND EstimatedArrival BETWEEN '".$EDAFrom."' AND '".$EDATo."'";
+			$whereClause .= "AND EDA BETWEEN '".$EDAFrom."' AND '".$EDATo."'";
 
 		if ($DepartureFrom != 'null')
 			$whereClause .= "AND Departure BETWEEN '".$DepartureFrom."' AND '".$DepartureTo."'";
